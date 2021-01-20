@@ -9,9 +9,9 @@ public abstract class Optimizer {
     /**
      * 大或等于0的浮点数，学习率
      */
-    protected float lr = 0.0f;
+    protected float learnRate = 0.0f;
     /**
-     * 步长
+     * 学习率步长
      */
     protected float lamda = 0.0f;
 
@@ -24,13 +24,13 @@ public abstract class Optimizer {
     GMode mode;
 
     public Optimizer(float lr) {
-        this.lr = lr;
+        this.learnRate = lr;
         this.mode = GMode.NONE;
     }
 
 
     public Optimizer(float lr, GMode mode, float lamda) {
-        this.lr = lr;
+        this.learnRate = lr;
         this.lamda = lamda;
         this.mode = mode;
     }
@@ -39,11 +39,11 @@ public abstract class Optimizer {
 
     public abstract void updateB(Blob params, Blob gradient);
 
-    public void setLr(float lr) {
-        this.lr = lr;
+    public void setLearnRate(float learnRate) {
+        this.learnRate = learnRate;
     }
 
-    public float getLr() {
-        return this.lr;
+    public float getLearnRate() {
+        return this.learnRate;
     }
 }

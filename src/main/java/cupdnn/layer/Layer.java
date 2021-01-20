@@ -33,13 +33,13 @@ public abstract class Layer {
         return id;
     }
 
-    abstract public Blob createOutBlob();
-
-    abstract public Blob createDiffBlob();
-
     public void setActivationFunc(ActivationFunc func) {
         this.activationFunc = func;
     }
+
+    abstract public Blob createOutBlob();
+
+    abstract public Blob createDiffBlob();
 
     //类型
     abstract public String getType();

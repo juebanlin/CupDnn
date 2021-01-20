@@ -1,10 +1,8 @@
 package cupdnn.optimizer;
 
 import java.util.HashMap;
-import java.util.List;
 
 import cupdnn.data.Blob;
-import cupdnn.optimizer.Optimizer.GMode;
 
 /**
  * 优化器-SGD with Momentum带动量的SGD
@@ -43,7 +41,7 @@ public class SGDMOptimizer extends Optimizer {
         float[] bData = b.getData();
         float[] gradData = gradient.getData();
         for (int j = 0; j < b.getSize(); j++) {
-            float V = momentum * privData[j] - lr * gradData[j];
+            float V = momentum * privData[j] - learnRate * gradData[j];
             bData[j] += V;
             privData[j] = V;
         }
@@ -65,9 +63,9 @@ public class SGDMOptimizer extends Optimizer {
                     //添加l1衰减
                     float V = 0;
                     if (wData[j] >= 0) {
-                        V = momentum * privData[j] - lr * lamda - lr * gradData[j];
+                        V = momentum * privData[j] - learnRate * lamda - learnRate * gradData[j];
                     } else {
-                        V = momentum * privData[j] + lr * lamda - lr * gradData[j];
+                        V = momentum * privData[j] + learnRate * lamda - learnRate * gradData[j];
                     }
                     wData[j] += V;
                     privData[j] = V;
@@ -77,7 +75,7 @@ public class SGDMOptimizer extends Optimizer {
             case L2: {
                 for (int j = 0; j < w.getSize(); j++) {
                     //添加l2衰减
-                    float V = momentum * privData[j] - lr * lamda * wData[j] - lr * gradData[j];
+                    float V = momentum * privData[j] - learnRate * lamda * wData[j] - learnRate * gradData[j];
                     wData[j] += V;
                     privData[j] = V;
                 }
@@ -85,7 +83,7 @@ public class SGDMOptimizer extends Optimizer {
             case NONE:
             default: {
                 for (int j = 0; j < w.getSize(); j++) {
-                    float V = momentum * privData[j] - lr * gradData[j];
+                    float V = momentum * privData[j] - learnRate * gradData[j];
                     wData[j] += V;
                     privData[j] = V;
                 }

@@ -1,17 +1,13 @@
 package cupdnn.layer;
 
+import cupdnn.Network;
+import cupdnn.data.Blob;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
-
-import cupdnn.Network;
-import cupdnn.data.Blob;
-import cupdnn.data.BlobParams;
-import cupdnn.util.Task;
-import cupdnn.util.ThreadPoolManager;
 
 /**
  * 平均值池化层
@@ -25,6 +21,11 @@ public class PoolMeanLayer extends Layer {
     private int height;
     private int inChannel;
     private int kernelSize;
+    /**
+     * 步幅
+     * Stride的作用：是成倍缩小尺寸，而这个参数的值就是缩小的具体倍数，比如步幅为2，输出就是输入的1/2；步幅为3，输出就是输入的1/3
+     * https://blog.csdn.net/weixin_42899627/article/details/108228008
+     */
     private int stride;
 
     public PoolMeanLayer(Network network) {
@@ -61,22 +62,24 @@ public class PoolMeanLayer extends Layer {
         List<Runnable> tasks = new ArrayList<>();
         for (int n = 0; n < output.getNumbers(); n++) {
             int finalN = n;
-            tasks.add(()->{for (int c = 0; c < output.getChannels(); c++) {
-                for (int h = 0; h < output.getHeight(); h++) {
-                    for (int w = 0; w < output.getWidth(); w++) {
-                        int inStartX = w * stride;
-                        int inStartY = h * stride;
-                        float sum = 0;
-                        for (int kh = 0; kh < kernelSize; kh++) {
-                            for (int kw = 0; kw < kernelSize; kw++) {
-                                int curIndex = input.getIndexByParams(finalN, c, inStartY + kh, inStartX + kw);
-                                sum += inputData[curIndex];
+            tasks.add(() -> {
+                for (int c = 0; c < output.getChannels(); c++) {
+                    for (int h = 0; h < output.getHeight(); h++) {
+                        for (int w = 0; w < output.getWidth(); w++) {
+                            int inStartX = w * stride;
+                            int inStartY = h * stride;
+                            float sum = 0;
+                            for (int kh = 0; kh < kernelSize; kh++) {
+                                for (int kw = 0; kw < kernelSize; kw++) {
+                                    int curIndex = input.getIndexByParams(finalN, c, inStartY + kh, inStartX + kw);
+                                    sum += inputData[curIndex];
+                                }
                             }
+                            outputData[output.getIndexByParams(finalN, c, h, w)] = sum / (kernelSize * kernelSize);
                         }
-                        outputData[output.getIndexByParams(finalN, c, h, w)] = sum / (kernelSize * kernelSize);
                     }
                 }
-            }});
+            });
         }
         mNetwork.runTasksAndWait(tasks);
     }
@@ -90,7 +93,7 @@ public class PoolMeanLayer extends Layer {
         List<Runnable> tasks = new ArrayList<>();
         for (int n = 0; n < inputDiff.getNumbers(); n++) {
             int finalN = n;
-            tasks.add(()->{
+            tasks.add(() -> {
                 for (int c = 0; c < inputDiff.getChannels(); c++) {
                     for (int h = 0; h < inputDiff.getHeight(); h++) {
                         for (int w = 0; w < inputDiff.getWidth(); w++) {

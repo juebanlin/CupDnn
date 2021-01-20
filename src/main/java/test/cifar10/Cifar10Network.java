@@ -62,8 +62,9 @@ public class Cifar10Network {
 	public void buildNetwork(int numOfTrainData){
 		//首先构建神经网络对象，并设置参数
 		network = new Network();
-		network.setThreadNum(8);
+		network.setThreadNum(16);
 		network.setBatch(20);
+		network.setLrDecay(0.9f);
 		//network.setLoss(new LogLikeHoodLoss());
 		//network.setLoss(new CrossEntropyLoss());
 		network.setLoss(new MSELoss());

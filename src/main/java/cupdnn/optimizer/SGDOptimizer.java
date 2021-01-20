@@ -23,7 +23,7 @@ public class SGDOptimizer extends Optimizer {
         float[] bData = b.getData();
         float[] gradData = gradient.getData();
         for (int j = 0; j < b.getSize(); j++) {
-            bData[j] -= lr * gradData[j];
+            bData[j] -= learnRate * gradData[j];
         }
     }
 
@@ -36,22 +36,22 @@ public class SGDOptimizer extends Optimizer {
                 for (int j = 0; j < w.getSize(); j++) {
                     //添加l1衰减
                     if (wData[j] >= 0) {
-                        wData[j] = wData[j] - lr * lamda - lr * gradData[j];
+                        wData[j] = wData[j] - learnRate * lamda - learnRate * gradData[j];
                     } else {
-                        wData[j] = wData[j] + lr * lamda - lr * gradData[j];
+                        wData[j] = wData[j] + learnRate * lamda - learnRate * gradData[j];
                     }
                 }
             }break;
             case L2:{
                 for (int j = 0; j < w.getSize(); j++) {
                     //添加l2衰减
-                    wData[j] = (1.0f - lr * lamda) * wData[j] - lr * gradData[j];
+                    wData[j] = (1.0f - learnRate * lamda) * wData[j] - learnRate * gradData[j];
                 }
             }break;
             case NONE:
             default:{
                 for (int j = 0; j < w.getSize(); j++) {
-                    wData[j] -= lr * gradData[j];
+                    wData[j] -= learnRate * gradData[j];
                 }
             }break;
         }

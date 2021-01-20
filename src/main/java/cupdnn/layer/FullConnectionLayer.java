@@ -1,23 +1,17 @@
 package cupdnn.layer;
 
-import cupdnn.data.Blob;
-import cupdnn.data.BlobParams;
-import cupdnn.util.MathFunctions;
-import cupdnn.util.Task;
-import cupdnn.util.ThreadPoolManager;
-
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
-
 import cupdnn.Network;
 import cupdnn.active.ReluActivationFunc;
 import cupdnn.active.SigmodActivationFunc;
 import cupdnn.active.TanhActivationFunc;
+import cupdnn.data.Blob;
+import cupdnn.util.MathFunctions;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 全连接层(Fully Connected Layer) - 主要作用是分类。
@@ -80,7 +74,7 @@ public class FullConnectionLayer extends Layer {
         int batch = mNetwork.getBatch();
         for (int n = 0; n < batch; n++) {
             int finalN = n;
-            tasks.add(()->{
+            tasks.add(() -> {
                 for (int os = 0; os < outSize; os++) {//有多少个输出，当前层就有多少个神经元
                     //和每个神经元的权重相乘
                     for (int is = 0; is < inSize; is++) {
@@ -122,7 +116,7 @@ public class FullConnectionLayer extends Layer {
             List<Runnable> tasks = new ArrayList<>();
             for (int n = 0; n < batch; n++) {
                 int finalN = n;
-                tasks.add(()->{
+                tasks.add(() -> {
                     for (int ids = 0; ids < outSize; ids++) {
                         inputDiffData[finalN * outSize + ids] *= activationFunc.diffActive(zData[finalN * outSize + ids]);
                     }
@@ -134,7 +128,7 @@ public class FullConnectionLayer extends Layer {
         List<Runnable> tasks = new ArrayList<>();
         for (int n = 0; n < batch; n++) {
             int finalN = n;
-            tasks.add(()->{
+            tasks.add(() -> {
                 for (int ids = 0; ids < outSize; ids++) {
                     for (int is = 0; is < inSize; is++) {
                         //相当于一个神经元和它的每一个连接乘加
@@ -165,7 +159,7 @@ public class FullConnectionLayer extends Layer {
         tasks.clear();
         for (int n = 0; n < batch; n++) {
             int finalN = n;
-            tasks.add(()->{
+            tasks.add(() -> {
                 for (int ids = 0; ids < outSize; ids++) {
                     for (int ods = 0; ods < inSize; ods++) {
                         outputDiffData[finalN * inSize + ods] += inputDiffData[finalN * outSize + ids] * wData[ids * inSize + ods];

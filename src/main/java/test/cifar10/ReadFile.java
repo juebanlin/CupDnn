@@ -3,6 +3,7 @@ package test.cifar10;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,7 +29,7 @@ public class ReadFile {
             for (int i = 1; i < 6; i++) {
                 String tmpFileName = fileName.replace('%', (char) ('0' + i));
                 //System.out.println(tmpFileName);
-                FileInputStream fileInputStream = new FileInputStream(tmpFileName);
+                InputStream fileInputStream = getClass().getClassLoader().getResourceAsStream(tmpFileName);
                 for (int j = 0; j < 10000; j++) {
                     int label = fileInputStream.read();
                     //System.out.println("label: "+label);
@@ -40,7 +41,7 @@ public class ReadFile {
                 fileInputStream.close();
             }
         } else {
-            FileInputStream fileInputStream = new FileInputStream(fileName);
+            InputStream fileInputStream = getClass().getClassLoader().getResourceAsStream(fileName);
             for (int j = 0; j < 10000; j++) {
                 int label = fileInputStream.read();
                 //System.out.println("label: "+label);

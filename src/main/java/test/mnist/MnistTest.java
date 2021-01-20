@@ -17,10 +17,10 @@ public class MnistTest {
         //load mnist
         ClassLoader classLoader = MnistTest.class.getClassLoader();
 
-        String path1 = classLoader.getResource("data/mnist/train-labels.idx1-ubyte").getPath();
-        String path2 = classLoader.getResource("data/mnist/train-images.idx3-ubyte").getPath();
-        String path3 = classLoader.getResource("data/mnist/t10k-labels.idx1-ubyte").getPath();
-        String path4 = classLoader.getResource("data/mnist/t10k-images.idx3-ubyte").getPath();
+        String path1 = "data/mnist/train-labels.idx1-ubyte";
+        String path2 = "data/mnist/train-images.idx3-ubyte";
+        String path3 = "data/mnist/t10k-labels.idx1-ubyte";
+        String path4 = "data/mnist/t10k-images.idx3-ubyte";
         String modelPath= classLoader.getResource("model/mnist.model").getPath();
 
         ReadFile rf1 = new ReadFile(path1, path2);

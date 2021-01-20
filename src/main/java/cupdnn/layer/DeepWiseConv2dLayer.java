@@ -7,15 +7,12 @@ import cupdnn.active.SigmodActivationFunc;
 import cupdnn.active.TanhActivationFunc;
 import cupdnn.data.Blob;
 import cupdnn.util.MathFunctions;
-import cupdnn.util.Task;
-import cupdnn.util.ThreadPoolManager;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 /**
  * 深度可分离卷积
@@ -34,6 +31,11 @@ public class DeepWiseConv2dLayer extends Layer {
     private int inChannel;
     private int outChannel;
     private int kernelSize;
+    /**
+     * 步幅
+     * Stride的作用：是成倍缩小尺寸，而这个参数的值就是缩小的具体倍数，比如步幅为2，输出就是输入的1/2；步幅为3，输出就是输入的1/3
+     * https://blog.csdn.net/weixin_42899627/article/details/108228008
+     */
     private int stride;
 
     public DeepWiseConv2dLayer(Network network) {
@@ -90,7 +92,7 @@ public class DeepWiseConv2dLayer extends Layer {
         List<Runnable> tasks = new ArrayList<>();
         for (int n = 0; n < output.getNumbers(); n++) {
             int finalN = n;
-            tasks.add(()->{
+            tasks.add(() -> {
                 for (int c = 0; c < output.getChannels(); c++) {
                     for (int h = 0; h < output.getHeight(); h++) {
                         for (int w = 0; w < output.getWidth(); w++) {
@@ -118,7 +120,7 @@ public class DeepWiseConv2dLayer extends Layer {
             List<Runnable> tasks = new ArrayList<>();
             for (int n = 0; n < inputDiff.getNumbers(); n++) {
                 int finalN = n;
-                tasks.add(()->{
+                tasks.add(() -> {
                     for (int c = 0; c < inputDiff.getChannels(); c++) {
                         for (int h = 0; h < inputDiff.getHeight(); h++) {
                             for (int w = 0; w < inputDiff.getWidth(); w++) {
@@ -136,7 +138,7 @@ public class DeepWiseConv2dLayer extends Layer {
         List<Runnable> tasks = new ArrayList<>();
         for (int n = 0; n < inputDiff.getNumbers(); n++) {
             int finalN = n;
-            tasks.add(()->{
+            tasks.add(() -> {
                 for (int c = 0; c < inputDiff.getChannels(); c++) {
                     int inputChannelIndex = c / (inputDiff.getChannels() / input.getChannels());
                     for (int h = 0; h < inputDiff.getHeight(); h++) {

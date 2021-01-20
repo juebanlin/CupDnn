@@ -276,7 +276,7 @@ public class Network {
     public void fit(List<DataAndLabel> trainLists, int epoes, List<DataAndLabel> testLists) {
         System.out.println("fitting...... please wait for a moment!");
         int batch = getBatch();
-        float loclaLr = optimizer.getLr();
+        float loclaLr = optimizer.getLearnRate();
         float lossValue = 0;
         InputLayer input = (InputLayer) layers.get(0);
         for (int e = 0; e < epoes; e++) {
@@ -294,10 +294,10 @@ public class Network {
             //每个epoe做一次测试
             System.out.println();
             System.out.println("training...... epoe: " + e + " lossValue: " + lossValue
-                    + "  " + " lr: " + optimizer.getLr() + "  " + " cost " + (System.currentTimeMillis() - start));
+                    + "  " + " lr: " + optimizer.getLearnRate() + "  " + " cost " + (System.currentTimeMillis() - start));
             if (loclaLr > 0.0001f) {
                 loclaLr *= lrDecay;
-                optimizer.setLr(loclaLr);
+                optimizer.setLearnRate(loclaLr);
             }
             if (testLists != null) {
                 predict(testLists);
@@ -331,16 +331,16 @@ public class Network {
             //每个epoe做一次测试
             System.out.println();
             System.out.println("training...... epoe: " + e + " lossValue: " + lossValue
-                    + "  " + " lr: " + optimizer.getLr() + "  " + " cost " + (System.currentTimeMillis() - start));
+                    + "  " + " lr: " + optimizer.getLearnRate() + "  " + " cost " + (System.currentTimeMillis() - start));
 
             if (testLists != null) {
                 test(testLists);
             }
             //衰减优化器
-            float loclaLr = optimizer.getLr();
+            float loclaLr = optimizer.getLearnRate();
             if (loclaLr > 0.0001f) {
                 loclaLr *= lrDecay;
-                optimizer.setLr(loclaLr);
+                optimizer.setLearnRate(loclaLr);
             }
         }
     }

@@ -24,13 +24,12 @@ public class Blob implements Serializable{
 		this.height = b.height;
 		this.width = b.width;
 		this.dim = b.dim;
-		data = new float[getSize()];	
-		if(copy) {
-			for(int i=0;i<data.length;i++) {
-				data[i]=b.getData()[i];
-			}
-		}else {
-			for(int i=0;i<data.length;i++) {
+		data = new float[getSize()];
+		for(int i=0;i<data.length;i++) {
+			if(copy) {
+				data[i] = b.getData()[i];
+			}else
+			{
 				data[i]=0;
 			}
 		}
@@ -144,5 +143,4 @@ public class Blob implements Serializable{
 			toData[i] = this.data[i];
 		}
 	}
-	
 }

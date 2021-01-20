@@ -12,20 +12,19 @@ import cupdnn.data.Blob;
  * 语音识别用Recurrent layer去学习“如何”去听，再用学好的听取方式去处理声音再送入分类器中
  */
 public class RecurrentLayer extends Layer {
+    public static final String TYPE = "RecurrentLayer";
     Network mNetwork;
     Cell mCell;
     int seqLen;
     int inSize;
     int hidenSize;
-    public static final String TYPE = "RecurrentLayer";
+    RecurrentType type;
 
-    public static enum RecurrentType {
+    public enum RecurrentType {
         RNN,
         LSTM,
         GRU
     }
-
-    RecurrentType type;
 
     public RecurrentLayer(Network network) {
         super(network);

@@ -52,12 +52,8 @@ public class ReadFile {
 
         ByteArrayOutputStream labelBuffer = new ByteArrayOutputStream();
         ByteArrayOutputStream imageBuffer = new ByteArrayOutputStream();
-
-//          InputStream labelInputStream = this.getClass().getResourceAsStream(labelFileName);
-//          InputStream imageInputStream = this.getClass().getResourceAsStream(imageFileName);
-        FileInputStream labelInputStream =new FileInputStream(labelFileName);
-        FileInputStream imageInputStream =new FileInputStream(imageFileName);
-
+        InputStream labelInputStream = this.getClass().getResourceAsStream(labelFileName);
+        InputStream imageInputStream = this.getClass().getResourceAsStream(imageFileName);
         int read;
         byte[] buffer = new byte[16384];  //16*1024
 
