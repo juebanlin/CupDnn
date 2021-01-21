@@ -16,8 +16,8 @@ public class SGDMOptimizer extends Optimizer {
     private float momentum = 0.9f;
     private HashMap<Blob, Blob> privMap = new HashMap();
 
-    public SGDMOptimizer(float lr, float mententum) {
-        super(lr);
+    public SGDMOptimizer(float learnRate, float mententum) {
+        super(learnRate);
         this.momentum = mententum;
     }
 
@@ -25,8 +25,8 @@ public class SGDMOptimizer extends Optimizer {
      * lamda是衰减权重，是一个很小的数字
      * */
 
-    public SGDMOptimizer(float lr, Optimizer.GMode mode, float lamda, float mententum) {
-        super(lr, mode, lamda);
+    public SGDMOptimizer(float learnRate, Optimizer.GMode mode, float lamda, float mententum) {
+        super(learnRate, mode, lamda);
         this.momentum = mententum;
     }
 

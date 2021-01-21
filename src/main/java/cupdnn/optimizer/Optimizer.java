@@ -23,14 +23,14 @@ public abstract class Optimizer {
 
     GMode mode;
 
-    public Optimizer(float lr) {
-        this.learnRate = lr;
+    public Optimizer(float learnRate) {
+        this.learnRate = learnRate;
         this.mode = GMode.NONE;
     }
 
 
-    public Optimizer(float lr, GMode mode, float lamda) {
-        this.learnRate = lr;
+    public Optimizer(float learnRate, GMode mode, float lamda) {
+        this.learnRate = learnRate;
         this.lamda = lamda;
         this.mode = mode;
     }

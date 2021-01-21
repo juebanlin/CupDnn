@@ -9,13 +9,13 @@ import cupdnn.data.Blob;
  */
 public class SGDOptimizer extends Optimizer {
 
-    public SGDOptimizer(float lr) {
-        super(lr);
+    public SGDOptimizer(float learnRate) {
+        super(learnRate);
     }
 
 
-    public SGDOptimizer(float lr, Optimizer.GMode mode, float lamda) {
-        super(lr, mode, lamda);
+    public SGDOptimizer(float learnRate, Optimizer.GMode mode, float lamda) {
+        super(learnRate, mode, lamda);
     }
 
     @Override
