@@ -42,14 +42,14 @@ public class MnistNetwork {
 		Conv2dLayer conv1 = new Conv2dLayer(network,28,28,1,6,3,1);
 		conv1.setActivationFunc(new ReluActivationFunc());
 		network.addLayer(conv1);
-		
+		//(inputSize-kernelSize)/stride+1=outSize ==>  (28-2)/2+1=14
 		PoolMaxLayer pool1 = new PoolMaxLayer(network,14,14,6,2,2);
 		network.addLayer(pool1);
 		
 		Conv2dLayer conv2 = new Conv2dLayer(network,14,14,6,6,3,1);
 		conv2.setActivationFunc(new ReluActivationFunc());
 		network.addLayer(conv2);
-	
+		//(inputSize-kernelSize)/stride+1=outSize ==> (14-2)/2+1=7
 		PoolMeanLayer pool2 = new PoolMeanLayer(network,7,7,6,2,2);
 		network.addLayer(pool2);
 	

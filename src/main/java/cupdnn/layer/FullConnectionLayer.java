@@ -18,11 +18,27 @@ import java.util.List;
  */
 public class FullConnectionLayer extends Layer {
     public static final String TYPE = "FullConnectionLayer";
+    /**
+     * 权重值
+     */
     private Blob w;
+    /**
+     * 权重值梯度
+     */
     private transient Blob wGradient;
+    /**
+     * 偏置值
+     */
     private Blob b;
+    /**
+     * 偏置梯度
+     */
     private transient Blob bGradient;
+    /**
+     * 中间值,计算用到
+     */
     private transient Blob z;
+
     private int inSize;
     private int outSize;
 
@@ -41,11 +57,8 @@ public class FullConnectionLayer extends Layer {
         if (w == null && b == null) {
             //表明该层公有outSize个神经元，每个神经元和前面层的inSize个神经元向连
             w = new Blob(inSize, outSize);
-
             //表明该层有outSize个神经元，每个神经元有一个偏执
             b = new Blob(outSize);
-
-
             //初始化
             float[] wData = w.getData();
             float[] bData = b.getData();
