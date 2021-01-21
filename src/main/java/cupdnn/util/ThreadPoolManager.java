@@ -1,10 +1,7 @@
 package cupdnn.util;
 
 import java.util.Collection;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.LinkedBlockingDeque;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 public class ThreadPoolManager {
     private static ThreadPoolManager instance;
@@ -25,7 +22,7 @@ public class ThreadPoolManager {
         if (threadNum < 1) {
             threadNum = 4;
         }
-        threadPool = new ThreadPoolExecutor(threadNum, threadNum, 1000, TimeUnit.SECONDS, new LinkedBlockingDeque<>());
+        threadPool = new ThreadPoolExecutor(threadNum, threadNum, 1000, TimeUnit.SECONDS, new LinkedBlockingQueue<>());
     }
 
     /**

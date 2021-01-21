@@ -37,14 +37,14 @@ public class Cifar10Network {
 		conv1.setActivationFunc(new ReluActivationFunc());
 		network.addLayer(conv1);
 		
-		PoolMaxLayer pool1 = new PoolMaxLayer(network,32,32,6,2,2);
+		PoolMaxLayer pool1 = new PoolMaxLayer(network,16,16,6,2,2);
 		network.addLayer(pool1);
 		
 		Conv2dLayer conv2 = new Conv2dLayer(network,16,16,6,6,3,1);
 		conv2.setActivationFunc(new ReluActivationFunc());
 		network.addLayer(conv2);
 		
-		PoolMeanLayer pool2 = new PoolMeanLayer(network,16,16,6,2,2);
+		PoolMeanLayer pool2 = new PoolMeanLayer(network,8,8,6,2,2);
 		network.addLayer(pool2);
 		
 		FullConnectionLayer fc1 = new FullConnectionLayer(network,8*8*6,256);

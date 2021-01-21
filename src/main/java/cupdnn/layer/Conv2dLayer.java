@@ -20,18 +20,46 @@ import java.util.List;
  */
 public class Conv2dLayer extends Layer {
     public static final String TYPE = "Conv2dLayer";
+    /**
+     * 卷积核
+     * 默认用高斯分布初始化数值
+     */
     private Blob kernel;
     /**
      * 偏置值
      */
     private Blob bias;
+    /**
+     * 卷积核梯度
+     */
     private Blob kernelGradient;
+    /**
+     * 偏置值梯度
+     */
     private Blob biasGradient;
+    /**
+     * 卷积后的结果,临时存储
+     */
     private Blob z;
+    /**
+     * 输出图像宽
+     */
     private int width;
+    /**
+     * 输出图像高
+     */
     private int height;
+    /**
+     * 输入图像通道数
+     */
     private int inChannel;
+    /**
+     * 输出通道,卷积核数量
+     */
     private int outChannel;
+    /**
+     * 卷积核大小(高宽)
+     */
     private int kernelSize;
     /**
      * 步幅
@@ -52,6 +80,16 @@ public class Conv2dLayer extends Layer {
         super(network);
     }
 
+    /**
+     *
+     * @param network
+     * @param width 输出图像宽
+     * @param height 输出图像高
+     * @param inChannel 输入通道数
+     * @param outChannel 输出通道数(卷积核个数)
+     * @param kernelSize 卷积核尺寸大小(高宽)
+     * @param stride 步幅
+     */
     public Conv2dLayer(Network network, int width, int height, int inChannel, int outChannel, int kernelSize, int stride) {
         super(network);
         this.width = width;
@@ -80,7 +118,6 @@ public class Conv2dLayer extends Layer {
         z = new Blob(mNetwork.getBatch(), outChannel, height, width);
         kernelGradient = new Blob(inChannel * outChannel, kernelSize, kernelSize);
         biasGradient = new Blob(outChannel);
-
     }
 
     @Override

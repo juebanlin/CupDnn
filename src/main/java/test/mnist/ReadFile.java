@@ -48,12 +48,11 @@ public class ReadFile {
     }
 
     public List<DigitImage> loadDigitImages() throws IOException {
-        images = new ArrayList<DigitImage>();
-
+        images = new ArrayList<>();
         ByteArrayOutputStream labelBuffer = new ByteArrayOutputStream();
         ByteArrayOutputStream imageBuffer = new ByteArrayOutputStream();
-        InputStream labelInputStream = this.getClass().getResourceAsStream(labelFileName);
-        InputStream imageInputStream = this.getClass().getResourceAsStream(imageFileName);
+        InputStream labelInputStream = this.getClass().getClassLoader().getResourceAsStream(labelFileName);
+        InputStream imageInputStream = this.getClass().getClassLoader().getResourceAsStream(imageFileName);
         int read;
         byte[] buffer = new byte[16384];  //16*1024
 

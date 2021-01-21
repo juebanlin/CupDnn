@@ -142,11 +142,11 @@ public class PoolMeanLayer extends Layer {
 
     @Override
     public Blob createOutBlob() {
-        return new Blob(mNetwork.getBatch(), inChannel, width / 2, height / 2);
+        return new Blob(mNetwork.getBatch(), inChannel, width , height );
     }
 
     @Override
     public Blob createDiffBlob() {
-        return new Blob(mNetwork.getBatch(), inChannel, width / 2, height / 2);
+        return new Blob(mNetwork.getBatch(), inChannel, width , height );
     }
 }

@@ -5,13 +5,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
-
 import cupdnn.Network;
 import cupdnn.data.Blob;
-import cupdnn.data.BlobParams;
-import cupdnn.util.Task;
-import cupdnn.util.ThreadPoolManager;
 
 /**
  * 分类器

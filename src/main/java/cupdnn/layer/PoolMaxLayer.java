@@ -50,8 +50,8 @@ public class PoolMaxLayer extends Layer {
 
     @Override
     public void prepare() {
-        maxIndex = new Blob(mNetwork.getBatch(), inChannel, height, width);
-
+        Blob input = mNetwork.getDatas().get(id - 1);
+        maxIndex = new Blob(mNetwork.getBatch(), inChannel, input.getHeight(), input.getWidth());
     }
 
     @Override
@@ -150,11 +150,11 @@ public class PoolMaxLayer extends Layer {
 
     @Override
     public Blob createOutBlob() {
-        return new Blob(mNetwork.getBatch(), inChannel, width / 2, height / 2);
+        return new Blob(mNetwork.getBatch(), inChannel, width , height);
     }
 
     @Override
     public Blob createDiffBlob() {
-        return new Blob(mNetwork.getBatch(), inChannel, width / 2, height / 2);
+        return new Blob(mNetwork.getBatch(), inChannel, width, height);
     }
 }

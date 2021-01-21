@@ -67,7 +67,7 @@ public class Blob implements Serializable{
 
 	
 	//获取第n个number的第channels个通道的第height行的第width列的数
-	public double getDataByParams(int numbers,int channels,int height,int width){
+	public float getDataByParams(int numbers,int channels,int height,int width){
 		return data[numbers*get3DSize()+channels*get2DSize()+height*getWidth()+width];
 	}
 	

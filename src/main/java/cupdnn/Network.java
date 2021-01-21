@@ -127,12 +127,13 @@ public class Network {
 
     public void prepare() {
         for (int i = 0; i < layers.size(); i++) {
-            Blob data = layers.get(i).createOutBlob();
+            Layer layer = layers.get(i);
+            layer.setId(i);
+            Blob data = layer.createOutBlob();
             datas.add(data);
-            Blob diff = layers.get(i).createDiffBlob();
+            Blob diff = layer.createDiffBlob();
             diffs.add(diff);
-            layers.get(i).setId(i);
-            layers.get(i).prepare();
+            layer.prepare();
         }
     }
 
